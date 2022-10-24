@@ -1,7 +1,10 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "220"
   name: norootsquash
+  namespace: kube-system
   labels:
     tier: management
     app: norootsquash
@@ -35,6 +38,8 @@ spec:
             name: host-systemd
           - mountPath: /host/sys
             name: host-sys
+      imagePullSecrets:
+      - name: cpregistrysecret
       tolerations:
       - operator: Exists
       volumes:
